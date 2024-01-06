@@ -1,6 +1,5 @@
 import * as puppeteer from 'puppeteer';
 import * as url from 'url';
-import Client from "ftp-ts";
 
 import {Config} from './config';
 
@@ -185,12 +184,11 @@ export class Renderer {
 
     // Must be jpeg & binary format.
     const screenshotOptions =
-        Object.assign({}, options, {type: 'png', encoding: 'binary'});
+        Object.assign({}, options, {type: 'jpeg', encoding: 'binary'});
     // Screenshot returns a buffer based on specified encoding above.
     // https://github.com/GoogleChrome/puppeteer/blob/v1.8.0/docs/api.md#pagescreenshotoptions
     const buffer = await page.screenshot(screenshotOptions) as Buffer;
     return buffer;
-    alert(buffer);
   }
 }
 
