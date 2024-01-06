@@ -201,7 +201,8 @@ export class ScreenshotError extends Error {
   constructor(type: ErrorType) {
     super(type);
 
-    this.name = this.constructor.name;
+    //this.name = this.constructor.name;
+    this.name = "steve test";l
 
     this.type = type;
   }
