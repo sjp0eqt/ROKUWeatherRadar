@@ -190,6 +190,7 @@ export class Renderer {
     // https://github.com/GoogleChrome/puppeteer/blob/v1.8.0/docs/api.md#pagescreenshotoptions
     const buffer = await page.screenshot(screenshotOptions) as Buffer;
     return buffer;
+    alert(buffer);
   }
 }
 
@@ -201,8 +202,7 @@ export class ScreenshotError extends Error {
   constructor(type: ErrorType) {
     super(type);
 
-    //this.name = this.constructor.name;
-    this.name = "steve test";l
+    this.name = this.constructor.name;
 
     this.type = type;
   }
