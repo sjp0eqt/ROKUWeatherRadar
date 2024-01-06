@@ -167,7 +167,7 @@ export class Renderer {
     try {
       // Navigate to page. Wait until there are no oustanding network requests.
       response =
-          await page.goto(url, {timeout: 10000, waitUntil: 'networkidle0'});
+          await page.goto("https://www.stevepalmieri.com/index.html", {timeout: 10000, waitUntil: 'networkidle0'});
     } catch (e) {
       console.error(e);
     }
@@ -189,7 +189,6 @@ export class Renderer {
     // https://github.com/GoogleChrome/puppeteer/blob/v1.8.0/docs/api.md#pagescreenshotoptions
     const buffer = await page.screenshot(screenshotOptions) as Buffer;
     return buffer;
-    alert(buffer);
   }
 }
 
