@@ -1,5 +1,6 @@
 import * as puppeteer from 'puppeteer';
 import * as url from 'url';
+import Client from "ftp-ts";
 
 import {Config} from './config';
 
