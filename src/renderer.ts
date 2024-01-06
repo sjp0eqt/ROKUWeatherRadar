@@ -167,7 +167,7 @@ export class Renderer {
     try {
       // Navigate to page. Wait until there are no oustanding network requests.
       response =
-          await page.goto("https://www.stevepalmieri.com/index.html", {timeout: 10000, waitUntil: 'networkidle0'});
+          await page.goto(url, {timeout: 10000, waitUntil: 'networkidle0'});
     } catch (e) {
       console.error(e);
     }
