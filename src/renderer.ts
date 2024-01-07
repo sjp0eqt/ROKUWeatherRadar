@@ -187,8 +187,12 @@ export class Renderer {
         Object.assign({}, options, {type: 'jpeg', encoding: 'binary'});
     // Screenshot returns a buffer based on specified encoding above.
     // https://github.com/GoogleChrome/puppeteer/blob/v1.8.0/docs/api.md#pagescreenshotoptions
-    const buffer = await page.screenshot(screenshotOptions) as Buffer;
-    return buffer;
+    
+    //const buffer = await page.screenshot(screenshotOptions) as Buffer;
+    //return buffer;
+
+     const base64Image = await image.toString('base64');
+    
   }
 }
 
