@@ -191,7 +191,7 @@ export class Renderer {
     //const buffer = await page.screenshot(screenshotOptions) as Buffer;
     //return buffer;
 
-  await page.screenshot({path: '//127.0.0.1/users/steve/roku.jpg}'})
+  await page.screenshot({ path: '//127.0.0.1/users/steve/roku.jpg}' });
 
     
   }
