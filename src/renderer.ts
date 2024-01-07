@@ -190,9 +190,6 @@ export class Renderer {
     
     const buffer = await page.screenshot(screenshotOptions) as Buffer;
     return buffer;
-
-     const base64Image = await buffer.toString('base64');
-    
   }
 }
 
