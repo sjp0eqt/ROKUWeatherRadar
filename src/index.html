@@ -232,6 +232,47 @@ the License.
     function onEmptyUrl() {
       url.classList.add('error');
     }
+
+//--------------------------------------------------Save image to server--------------------------------------
+
+    // JavaScript function to save the image to a different location
+    async function saveImageToServer(imageUrl) {
+      try {
+        // Fetch the image data (Blob)
+        const response = await fetch(imageUrl, {
+          mode: 'cors' // Ensure cross-origin requests are allowed
+        });
+
+        // Check if the fetch request was successful
+        if (!response.ok) {
+          throw new Error('Image fetch failed: ' + response.statusText);
+        }
+
+        const imageBlob = await response.blob(); // Get image as blob
+
+        // Prepare form data to send to the server
+        const formData = new FormData();
+        formData.append('file', imageBlob, 'image.jpg');
+
+        // Send the image to the server
+        const serverResponse = await fetch('https://your-server.com/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (serverResponse.ok) {
+          alert('Image saved successfully!');
+        } else {
+          throw new Error('Image upload failed: ' + serverResponse.statusText);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to save the image.');
+      }
+    }
+      
+//-----------------------------------------------------------------------------------------------------------      
+      
   </script>
 
   <link rel="import" href="progress-bar.html">
