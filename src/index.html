@@ -195,6 +195,13 @@ the License.
     </a>
   </div>
 
+
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1007.0.min.js"></script>
+
+    
+
+
+    
   <script>
     function encodeUrl(fullUrl) {
       var url = new URL(fullUrl);
@@ -213,7 +220,6 @@ the License.
     }
 
     function takeScreenshot(element) {
-
       
       if (!url.value) {
         onEmptyUrl();
@@ -229,53 +235,12 @@ the License.
       element.classList.add('loading');
       document.querySelector('progress-bar').removeAttribute('hidden');
       window.location.href += `screenshot/${encodeUrl(url.value)}?width=${window.innerWidth}&height=${window.innerHeight}`;
-    
-     saveImageToServer("https://www.flickr.com/photos/stevepalmieri/53973691808/in/dateposted-ff/"});
-        
     }
 
     function onEmptyUrl() {
       url.classList.add('error');
     }
-
-//--------------------------------------------------Save image to server--------------------------------------
-
-    // JavaScript function to save the image to a different location
-    async function saveImageToServer(imageUrl) {
-      try {
-        // Fetch the image data (Blob)
-        const response = await fetch(imageUrl, {
-          mode: 'cors' // Ensure cross-origin requests are allowed
-        });
-
-        // Check if the fetch request was successful
-        if (!response.ok) {
-          throw new Error('Image fetch failed: ' + response.statusText);
-        }
-
-        const imageBlob = await response.blob(); // Get image as blob
-
-        // Prepare form data to send to the server
-        const formData = new FormData();
-        formData.append('file', imageBlob, 'image.jpg');
-
-        // Send the image to the server
-        const serverResponse = await fetch('https://radarimagesbucket.s3.us-east-2.amazonaws.com', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (serverResponse.ok) {
-          alert('Image saved successfully!');
-        } else {
-          throw new Error('Image upload failed: ' + serverResponse.statusText);
-        }
-      } catch (error) {
-        console.error(error);
-        alert('Failed to save the image.');
-      }
-    }
-      
+     
 //-----------------------------------------------------------------------------------------------------------      
       
   </script>
