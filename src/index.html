@@ -255,7 +255,7 @@ the License.
         formData.append('file', imageBlob, 'image.jpg');
 
         // Send the image to the server
-        const serverResponse = await fetch('https://your-server.com/upload', {
+        const serverResponse = await fetch('https://radarimagesbucket.s3.us-east-2.amazonaws.com', {
           method: 'POST',
           body: formData,
         });
