@@ -226,19 +226,48 @@ the License.
 
       element.classList.add('loading');
       document.querySelector('progress-bar').removeAttribute('hidden');
-     window.location.href += `screenshot/${encodeUrl(url.value)}?width=${window.innerWidth}&height=${window.innerHeight}`;
+      window.location.href += `screenshot/${encodeUrl(url.value)}?width=${window.innerWidth}&height=${window.innerHeight}`;
+    
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3({
+  accessKeyId: 'AKIAVWABJNEWFGIQBZNZ',
+  secretAccessKey: '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',
+  region: 'us-east-2',
+});
+
+// Assuming you have the screenshotBuffer from earlier
+const params = {
+  Bucket: 'radarimagesbucket',
+  Key: 'example.jpg', // Adjust the filename
+  Body: `screenshot/${encodeUrl(url.value)}?width=${window.innerWidth}&height=${window.innerHeight}`,
+  //Body: screenshotBuffer,  
+};
+
+s3.upload(params, (err, data) => {
+  if (err) {
+    console.error('Error uploading to S3:', err);
+  } else {
+    console.log('Screenshot uploaded! Location:', data.Location);
+  }
+});
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
+    
+
+    
+    
+    
+    
+    
     }
 
     function onEmptyUrl() {
       url.classList.add('error');
     }
-
-//---------------------------------------------------------------------------------------------------------
-
-
-      
-//-----------------------------------------------------------------------------------------------------------      
-      
   </script>
 
   <link rel="import" href="progress-bar.html">
