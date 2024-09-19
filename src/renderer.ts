@@ -191,27 +191,52 @@ export class Renderer {
 
 //----------------------------------------------------Copy JPG to the S3 Bucket----------------------------------------------------
 
-//const AWS = require('aws-sdk');
-//const s3 = new AWS.S3({
-  //accessKeyId: 'S3_ACCESSKEY',
-  //secretAccessKey: 'S3_SECRETACCESSKEY',
-  //region: 'us-east-2',
-//});
+    
+import AWS from 'aws-sdk';
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
 
-//--------------- Assuming you have the screenshotBuffer from earlier
-//const params = {
-  //Bucket: 'radarimagesbucket',
-  //Key: 'example.jpg', // Adjust the filename
-  //Body: buffer,
-//};
+// Load environment variables from .env file
+dotenv.config();
 
-//s3.upload(params, (err, data) => {
-  //if (err) {
-    //console.error('Error uploading to S3:', err);
-  //} else {
-    //console.log('Screenshot uploaded! Location:', data.Location);
-  //}
-//});
+// Initialize the S3 interface with credentials and region
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+});
+
+// Function to upload image buffer to S3
+async function uploadImageToS3(buffer: Buffer, bucketName: string, fileName: string): Promise<void> {
+    const params = {
+        Bucket: radarimagesbucket,
+        Key: steve.jpg, // The name you want to assign to the file in S3
+        Body: buffer,  // The image buffer
+        ContentType: 'image/jpeg', // or 'image/png', depending on the file type
+        ACL: 'public-read', // Optional: Makes the image publicly readable
+    };
+
+    try {
+        const uploadResult = await s3.upload(params).promise();
+        console.log(`File uploaded successfully at ${uploadResult.Location}`);
+    } catch (error) {
+        console.error('Error uploading the file:', error);
+    }
+}
+
+// Load the image from file system (for example purposes)
+const imagePath = path.join(__dirname, 'image.jpg');
+const imageBuffer = fs.readFileSync(imagePath);
+
+// Define the S3 bucket name and the file name
+const bucketName = 'radarimagesbucket';
+const fileName = 'uploaded-image.jpg';
+
+// Call the function to upload the image
+uploadImageToS3(imageBuffer, bucketName, fileName);
+
+    
 
 //-------------------------------------------------------------------------------------------------------------------------------
 
