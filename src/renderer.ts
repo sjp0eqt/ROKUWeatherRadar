@@ -187,35 +187,36 @@ export class Renderer {
     // Screenshot returns a buffer based on specified encoding above.
     // https://github.com/GoogleChrome/puppeteer/blob/v1.8.0/docs/api.md#pagescreenshotoptions
     const buffer = await page.screenshot(screenshotOptions) as Buffer;
-       
-    return buffer;
+     
 
 //----------------------------------------------------Copy JPG to the S3 Bucket----------------------------------------------------
 
-//const AWS = require('aws-sdk');
-//const s3 = new AWS.S3({
-  //accessKeyId: 'S3_ACCESSKEY',
-  //secretAccessKey: 'S3_SECRETACCESSKEY',
-  //region: 'us-east-2',
-//});
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3({
+  accessKeyId: 'S3_ACCESSKEY',
+  secretAccessKey: 'S3_SECRETACCESSKEY',
+  region: 'us-east-2',
+});
 
 //--------------- Assuming you have the screenshotBuffer from earlier
-//const params = {
-  //Bucket: 'radarimagesbucket',
-  //Key: 'example.jpg', // Adjust the filename
-  //Body: buffer,
-//};
+const params = {
+  Bucket: 'radarimagesbucket',
+  Key: 'example.jpg', // Adjust the filename
+  Body: buffer,
+};
 
-//s3.upload(params, (err, data) => {
-  //if (err) {
-    //console.error('Error uploading to S3:', err);
-  //} else {
-    //console.log('Screenshot uploaded! Location:', data.Location);
-  //}
-//});
+s3.upload(params, (err, data) => {
+  if (err) {
+    console.error('Error uploading to S3:', err);
+  } else {
+    console.log('Screenshot uploaded! Location:', data.Location);
+  }
+});
 
 //-------------------------------------------------------------------------------------------------------------------------------
 
+
+    return buffer;
     
   }
 }
