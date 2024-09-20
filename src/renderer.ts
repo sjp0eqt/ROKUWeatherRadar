@@ -1,4 +1,8 @@
 
+import { S3 } from 'aws-sdk'; // Replace 'S3' with the service you need
+//const s3 = new S3();
+// Now you can use methods like s3.listBuckets() or s3.getObject() in your code
+
 import * as puppeteer from 'puppeteer';
 import * as url from 'url';
 
