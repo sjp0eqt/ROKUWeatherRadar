@@ -323,8 +323,8 @@ const uploadImageToS3WithoutSDK = async ({
     const region = 'us-east-2'; // e.g., 'us-west-1'
     const key = 'images/my-uploaded-image.jpg';
     const contentType = 'image/jpeg'; // Adjust for your image type
-    const accessKeyId = S3_ACCESSKEY;
-    const secretAccessKey = s3_SECRETACCESSKEY;
+    const accessKeyId = 'AKIAVWABJNEWFGIQBZNZ';
+    const secretAccessKey = 'PWtncq/HzLGBJotpJDn8C1i080t+YoxAZoO2d9Vl';
 
     // Call the function to upload the image buffer
     await uploadImageToS3WithoutSDK({
