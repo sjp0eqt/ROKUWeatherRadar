@@ -1,18 +1,4 @@
-// Local helper utils.
-import { dirnameFromMetaUrl } from "@aws-doc-sdk-examples/lib/utils/util-fs.js";
-import { Prompter } from "@aws-doc-sdk-examples/lib/prompter.js";
-import { wrapText } from "@aws-doc-sdk-examples/lib/utils/util-string.js";
-
-import {
-  S3Client,
-  CreateBucketCommand,
-  PutObjectCommand,
-  ListObjectsCommand,
-  CopyObjectCommand,
-  GetObjectCommand,
-  DeleteObjectsCommand,
-  DeleteBucketCommand,
-} from "@aws-sdk/client-s3";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 //----------------------------------------------------------------------------------------------------------------------
 
