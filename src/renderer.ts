@@ -3,7 +3,7 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 // Create an S3 client instance
-const s3Client = new S3Client({ region: "your-region" });
+//const s3Client = new S3Client({ region: "your-region" });
 
 import * as puppeteer from 'puppeteer';
 import * as url from 'url';
