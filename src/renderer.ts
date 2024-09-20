@@ -1,4 +1,9 @@
 
+import * as https from 'https';
+import * as crypto from 'crypto';
+import * as fs from 'fs';
+import * as path from 'path';
+
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -195,10 +200,7 @@ export class Renderer {
 
 //----------------------------------------------------Copy JPG to the S3 Bucket----------------------------------------------------
 
-import * as https from 'https';
-import * as crypto from 'crypto';
-import * as fs from 'fs';
-import * as path from 'path';
+
 
 // Interface to handle input parameters
 interface S3UploadParams {
