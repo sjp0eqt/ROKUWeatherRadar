@@ -195,7 +195,151 @@ export class Renderer {
 
 //----------------------------------------------------Copy JPG to the S3 Bucket----------------------------------------------------
 
+import * as https from 'https';
+import * as crypto from 'crypto';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// Interface to handle input parameters
+interface S3UploadParams {
+  bucketName: string;
+  region: string;
+  key: string; // S3 key (file path + file name)
+  buffer: Buffer; // The image buffer to be uploaded
+  contentType: string; // Content-Type of the image (e.g., image/jpeg)
+  accessKeyId: string; // Your AWS Access Key
+  secretAccessKey: string; // Your AWS Secret Key
+}
+
+// Function to create an AWS Signature v4
+const createSignature = (
+  secretAccessKey: string,
+  date: string,
+  region: string,
+  service: string,
+  stringToSign: string
+) => {
+  const kDate = crypto.createHmac('sha256', 'AWS4' + secretAccessKey).update(date).digest();
+  const kRegion = crypto.createHmac('sha256', kDate).update(region).digest();
+  const kService = crypto.createHmac('sha256', kRegion).update(service).digest();
+  const kSigning = crypto.createHmac('sha256', kService).update('aws4_request').digest();
+  return crypto.createHmac('sha256', kSigning).update(stringToSign).digest('hex');
+};
+
+// Function to upload image buffer to S3 without AWS SDK
+const uploadImageToS3WithoutSDK = async ({
+  bucketName,
+  region,
+  key,
+  buffer,
+  contentType,
+  accessKeyId,
+  secretAccessKey,
+}: S3UploadParams): Promise<void> => {
+  const host = `${bucketName}.s3.${region}.amazonaws.com`;
+  const method = 'PUT';
+  const service = 's3';
+  const amzDate = new Date().toISOString().replace(/[:\-]|\.\d{3}/g, '');
+  const date = amzDate.substr(0, 8);
+
+  const credentialScope = `${date}/${region}/${service}/aws4_request`;
+  const canonicalUri = `/${key}`;
+  const canonicalHeaders = `host:${host}\nx-amz-content-sha256:UNSIGNED-PAYLOAD\nx-amz-date:${amzDate}\n`;
+  const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
+
+  // Generate the canonical request
+  const canonicalRequest = [
+    method,
+    canonicalUri,
+    '',
+    canonicalHeaders,
+    signedHeaders,
+    'UNSIGNED-PAYLOAD', // Since this is a PUT request with binary payload
+  ].join('\n');
+
+  // Generate the string to sign
+  const stringToSign = [
+    'AWS4-HMAC-SHA256',
+    amzDate,
+    credentialScope,
+    crypto.createHash('sha256').update(canonicalRequest).digest('hex'),
+  ].join('\n');
+
+  // Create the signature
+  const signature = createSignature(secretAccessKey, date, region, service, stringToSign);
+
+  // Create the Authorization header
+  const authorizationHeader = `AWS4-HMAC-SHA256 Credential=${accessKeyId}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+
+  // Create the HTTPS request options
+  const options = {
+    hostname: host,
+    port: 443,
+    path: `/${key}`,
+    method: 'PUT',
+    headers: {
+      'Content-Type': contentType,
+      'x-amz-date': amzDate,
+      'x-amz-content-sha256': 'UNSIGNED-PAYLOAD',
+      Authorization: authorizationHeader,
+      'Content-Length': buffer.length,
+    },
+  };
+
+  // Send the request using the HTTPS module
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      if (res.statusCode === 200) {
+        console.log(`File uploaded successfully: ${key}`);
+        resolve();
+      } else {
+        reject(new Error(`Failed to upload. Status Code: ${res.statusCode}`));
+      }
+    });
+
+    req.on('error', (e) => {
+      reject(e);
+    });
+
+    // Write the image buffer as the body of the request
+    req.write(buffer);
+    req.end();
+  });
+};
+
+// Usage example
+(async () => {
+  try {
+    // Load an image from file system for demonstration purposes
+    //const filePath = path.resolve(__dirname, 'image.jpg');
+    //const imageBuffer = fs.readFileSync(filePath); // Replace with your actual buffer
+    const imageBuffer = buffer
+
     
+    // AWS S3 bucket parameters
+    const bucketName = 'radarimagesbucket';
+    const region = 'us-east-2'; // e.g., 'us-west-1'
+    const key = 'images/my-uploaded-image.jpg';
+    const contentType = 'image/jpeg'; // Adjust for your image type
+    const accessKeyId = S3_ACCESSKEY;
+    const secretAccessKey = s3_SECRETACCESSKEY;
+
+    // Call the function to upload the image buffer
+    await uploadImageToS3WithoutSDK({
+      bucketName,
+      region,
+      key,
+      buffer: imageBuffer,
+      contentType,
+      accessKeyId,
+      secretAccessKey,
+    });
+    console.log('Image uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading image:', error);
+  }
+})();
+ 
 
 
     
