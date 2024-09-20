@@ -1,10 +1,4 @@
 
-// Import necessary S3 Client from AWS SDK
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-
-// Create an S3 client instance
-//const s3Client = new S3Client({ region: "us-east-2" });
-
 import * as puppeteer from 'puppeteer';
 import * as url from 'url';
 
