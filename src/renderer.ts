@@ -1,3 +1,7 @@
+
+<reference types="aws-sdk" />
+
+
 import * as puppeteer from 'puppeteer';
 import * as url from 'url';
 
