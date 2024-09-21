@@ -210,15 +210,17 @@ the License.
 
 <!-------------------------------------------------------------------------------------------------------------->
 
+    
     <div strFileName=strStationName></div>
 
 <!------------------------------------------------------------------------------------------------------------->    
 
     
   <script>
-    
-      GrabURLValues();
+
+    GrabURLValues();
       
+
       function encodeUrl(fullUrl) {
       var url = new URL(fullUrl);
       return url.origin + url.pathname + encodeURIComponent(url.search) + encodeURIComponent(url.hash);
