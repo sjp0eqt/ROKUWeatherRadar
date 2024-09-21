@@ -23,9 +23,9 @@ type ViewportDimensions = {
 
 //-------------------------------------------------------------------------------------------------------------------------
 
-//const queryString = window.location.search;
-//const urlParams = new URLSearchParams(queryString);
-//const strStationNumber = urlParams.get('StationNumber');
+
+const element = document.querySelector('[strFileName]');
+const myValue = element?.getAttribute('strFileName');
 
 
 //-------------------------------------------------------------------------------------------------------------------------
@@ -35,6 +35,11 @@ type ViewportDimensions = {
 
 const MOBILE_USERAGENT =
     'Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Mobile Safari/537.36';
+
+
+
+
+
 
 /**
  * Wraps Puppeteer's interface to Headless Chrome to expose high level rendering
@@ -334,7 +339,7 @@ const uploadImageToS3WithoutSDK = async ({
     // AWS S3 bucket parameters
     const bucketName = 'radarimagesbucket';
     const region = 'us-east-2'; // e.g., 'us-west-1'
-    const key = 'images/steve.jpg';
+    const key = 'images/' + strFileName + '.jpg';
     const contentType = 'image/jpeg'; // Adjust for your image type
     const accessKeyId = 'AKIAVWABJNEWFGIQBZNZ';
     const secretAccessKey = 'PWtncq/HzLGBJotpJDn8C1i080t+YoxAZoO2d9Vl';
