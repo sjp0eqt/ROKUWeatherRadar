@@ -176,6 +176,12 @@ the License.
 <body>
   <h1>Rendertron</h1>
 
+<!----------------------------------------------------------->
+    
+
+
+<!----------------------------------------------------------->
+    
   <div id="search-bar">
     <input id="url" type="url" placeholder="Enter a URL" autocapitalize="off" spellcheck="false">
     <progress-bar hidden></progress-bar>
@@ -202,8 +208,18 @@ the License.
     </a>
   </div>
 
+<!-------------------------------------------------------------------------------------------------------------->
+
+    <div strFileName=strStationName></div>
+
+<!------------------------------------------------------------------------------------------------------------->    
+
+    
   <script>
-    function encodeUrl(fullUrl) {
+    
+      GrabURLValues();
+      
+      function encodeUrl(fullUrl) {
       var url = new URL(fullUrl);
       return url.origin + url.pathname + encodeURIComponent(url.search) + encodeURIComponent(url.hash);
     }
@@ -239,6 +255,47 @@ the License.
     function onEmptyUrl() {
       url.classList.add('error');
     }
+  
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      
+   function getParams() 
+   {
+          var idx = document.URL.indexOf('?');
+          var params = new Array();
+          if (idx != -1) 
+          {
+             var pairs = document.URL.substring(idx+1, document.URL.length).split('&');
+             for (var i=0; i<pairs.length; i++) 
+             {
+                nameVal = pairs[i].split('=');
+                params[nameVal[0]] = nameVal[1];
+             }
+          }
+        
+        //var dblLat = (unescape(params["Lat"]));
+        //var dblLon = (unescape(params["Lon"]));
+        //var intZoom = (unescape(params["Zoom"]));
+        //var intColors = (unescape(params["Colors"]));
+        var strStationNumber = (unescape(params["StationNumber"]));  
+        
+        return params;
+   }
+
+
+function GrabURLValues()
+    {
+        params = getParams();
+        
+       //var dblLat = (unescape(params["Lat"]));
+       //var dblLon = (unescape(params["Lon"]));
+       //var intZoom = (unescape(params["Zoom"]));
+       //var intColors = (unescape(params["Colors"]));
+       var strStationNumber = (unescape(params["StationNumber"]));  
+    }
+
+      
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  
+    
   </script>
 
   <link rel="import" href="progress-bar.html">
