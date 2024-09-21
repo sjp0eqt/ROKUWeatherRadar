@@ -24,8 +24,6 @@ type ViewportDimensions = {
 //-------------------------------------------------------------------------------------------------------------------------
 
 
-const element = document.querySelector('[strFileName]');
-const myValue = element?.getAttribute('strFileName');
 
 
 //-------------------------------------------------------------------------------------------------------------------------
@@ -339,7 +337,7 @@ const uploadImageToS3WithoutSDK = async ({
     // AWS S3 bucket parameters
     const bucketName = 'radarimagesbucket';
     const region = 'us-east-2'; // e.g., 'us-west-1'
-    const key = 'images/' + myValue + '.jpg';
+    const key = 'images/steve.jpg';
     const contentType = 'image/jpeg'; // Adjust for your image type
     const accessKeyId = 'AKIAVWABJNEWFGIQBZNZ';
     const secretAccessKey = 'PWtncq/HzLGBJotpJDn8C1i080t+YoxAZoO2d9Vl';
