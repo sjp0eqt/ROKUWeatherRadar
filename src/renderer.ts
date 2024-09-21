@@ -23,9 +23,9 @@ type ViewportDimensions = {
 
 //-------------------------------------------------------------------------------------------------------------------------
 
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const strStationNumber = urlParams.get('StationNumber');
+//const queryString = window.location.search;
+//const urlParams = new URLSearchParams(queryString);
+//const strStationNumber = urlParams.get('StationNumber');
 
 
 //-------------------------------------------------------------------------------------------------------------------------
@@ -334,7 +334,7 @@ const uploadImageToS3WithoutSDK = async ({
     // AWS S3 bucket parameters
     const bucketName = 'radarimagesbucket';
     const region = 'us-east-2'; // e.g., 'us-west-1'
-    const key = 'images/' + strStationNumber + '.jpg';
+    const key = 'images/steve.jpg';
     const contentType = 'image/jpeg'; // Adjust for your image type
     const accessKeyId = 'AKIAVWABJNEWFGIQBZNZ';
     const secretAccessKey = 'PWtncq/HzLGBJotpJDn8C1i080t+YoxAZoO2d9Vl';
