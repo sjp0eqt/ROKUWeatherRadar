@@ -25,7 +25,7 @@ type ViewportDimensions = {
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const strStationNumber = urlParams.get('StationNumber')
+const strStationNumber = urlParams.get('StationNumber');
 
 
 //-------------------------------------------------------------------------------------------------------------------------
